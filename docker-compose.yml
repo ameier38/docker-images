@@ -1,0 +1,6 @@
+version: "3.6"
+services:
+  dotnet-mono:
+    image: ameier38/dotnet-mono:latest
+    build:
+      context: ./dotnet-mono

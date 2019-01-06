@@ -23,6 +23,7 @@ steps:
         all:
           filesChanged: 'Number("${{FILES_CHANGED}}") > 0'
   push_dotnet_mono:
+    stage: push
     title: Push dotnet-mono
     type: push
     candidate: ${{build_dotnet_mono}}

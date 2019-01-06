@@ -19,7 +19,7 @@ steps:
     working_directory: ${{check_dotnet_mono}}
     dockerfile: Dockerfile
     when: &when_files_changed
-      condition:
+      condition: &condition_files_changed
         all:
           filesChanged: 'Number("${{FILES_CHANGED}}") > 0'
   push_dotnet_mono:
@@ -29,6 +29,10 @@ steps:
     candidate: ${{build_dotnet_mono}}
     tag: ${{CF_BRANCH}}
     credentials:
-      username: ${{dockerUsername}}
-      password: ${{dockerPassword}}
-    when: *when_files_changed
+      username: ${{DOCKER_USER}}
+      password: ${{DOCKER_PASSWORD}}
+    when: 
+      branch:
+        only:
+          - develop
+      condition: *condition_files_changed

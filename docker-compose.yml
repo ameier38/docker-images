@@ -1,9 +1,5 @@
 version: "3.6"
 services:
-  docker-airflow-dotnet:
-    image: ameier38/docker-airflow-dotnet:latest
-    build:
-      context: ./docker-airflow-dotnet
   docker-ci:
     image: ameier38/docker-ci:latest
     build:
@@ -12,7 +8,3 @@ services:
     image: ameier38/dotnet-mono:latest
     build:
       context: ./dotnet-mono
-  gcloud-ci:
-    image: ameier38/gcloud-ci:latest
-    build:
-      context: ./gcloud-ci

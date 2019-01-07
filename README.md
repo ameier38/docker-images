@@ -1,9 +1,11 @@
 # Docker Images
-Collection of custom Docker images.
+
+[![pipeline status](https://gitlab.com/ameier38/docker-images/badges/master/pipeline.svg)](https://gitlab.com/ameier38/docker-images/commits/master)
+___
+__Docker Images__ is a collection of custom Docker images.
 
 ## Images
 - [dotnet-mono](./dotnet-mono/README.md)
-- [docker-ci](./docker-ci/README.md)
 
 ## Build
 You can build the images locally by running:
@@ -16,8 +18,8 @@ Or build all the images by running:
 ```
 
 ## Deploy
-Deployments are configured in DockerHub and triggered
-automatically on tagged releases to `master` branch.
+Deployments are configured in GitLab and triggered
+automatically on merges to `master` branch.
 
-### Other useful images
+## Other useful images
 - [dockersock](https://github.com/Dockins/dockersock/blob/master/Dockerfile)

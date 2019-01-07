@@ -11,30 +11,29 @@ build-dotnet-mono:
   image: docker:latest
   script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
-    - docker build -t "ameier38/dotnet-mono:$CI_COMMIT_REF_SLUG" .
-    - docker push "ameier38/dotnet-mono:$CI_COMMIT_REF_SLUG"
-  only:
+    - docker build -t "ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA" .
+    - docker push "ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA"
+  only: &only_dotnet_mono
+    refs:
+      - merge_requests
     changes:
       - dotnet-mono/Dockerfile
     
 test-dotnet-mono:
-  image: "ameier38/dotnet-mono:$CI_COMMIT_REF_SLUG"
+  image: "ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA"
   stage: test
   script:
     - dotnet --help
     - mono --help
     - fsharpi --help
-  dependencies:
-    - build-dotnet-mono
+  only: *only_dotnet_mono
 
 deploy-dotnet-mono:
   stage: deploy
   image: docker:latest
   script:
     - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD" index.docker.io
-    - docker build -t "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_REF_SLUG" .
-    - docker push "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_REF_SLUG"
+    - docker build -t "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA" .
+    - docker push "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA"
   only:
     - develop
-  dependencies:
-    - test-dotnet-mono

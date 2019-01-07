@@ -1,2 +1,2 @@
 # docker-ci
-Docker images for running `docker-compose` in CI environment (e.g., CircleCI)
+Docker image for running commands in CI environment (e.g., CircleCI).

@@ -36,4 +36,4 @@ deploy-dotnet-mono:
     - docker tag "$CI_REGISTRY_IMAGE/dotnet-mono:latest" "index.docker.io/ameier38/dotnet-mono:latest"
     - docker push "index.docker.io/ameier38/dotnet-mono:latest"
   only:
-    - develop
+    - master

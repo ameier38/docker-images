@@ -1,9 +1,5 @@
 version: "3.6"
 services:
-  docker-ci:
-    image: ameier38/docker-ci:latest
-    build:
-      context: ./docker-ci
   dotnet-mono:
     image: ameier38/dotnet-mono:latest
     build:

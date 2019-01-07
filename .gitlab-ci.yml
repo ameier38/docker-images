@@ -11,8 +11,8 @@ build-dotnet-mono:
   image: docker:latest
   script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
-    - docker build -t "ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA" .
-    - docker push "ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA"
+    - docker build -t "ameier38/dotnet-mono:$CI_COMMIT_SHA" .
+    - docker push "ameier38/dotnet-mono:$CI_COMMIT_SHA"
   only: &only_dotnet_mono
     refs:
       - merge_requests
@@ -20,7 +20,7 @@ build-dotnet-mono:
       - dotnet-mono/Dockerfile
     
 test-dotnet-mono:
-  image: "ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA"
+  image: "ameier38/dotnet-mono:$CI_COMMIT_SHA"
   stage: test
   script:
     - dotnet --help
@@ -33,7 +33,7 @@ deploy-dotnet-mono:
   image: docker:latest
   script:
     - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD" index.docker.io
-    - docker build -t "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA" .
-    - docker push "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_SHORT_SHA"
+    - docker build -t "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_SHA" .
+    - docker push "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_SHA"
   only:
     - develop

@@ -33,7 +33,7 @@ deploy-dotnet-mono:
   image: docker:latest
   script:
     - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD" index.docker.io
-    - docker tag "$CI_REGISTRY_IMAGE/dotnet-mono:latest" "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_SHA"
-    - docker push "index.docker.io/ameier38/dotnet-mono:$CI_COMMIT_SHA"
+    - docker tag "$CI_REGISTRY_IMAGE/dotnet-mono:latest" "index.docker.io/ameier38/dotnet-mono:latest"
+    - docker push "index.docker.io/ameier38/dotnet-mono:latest"
   only:
     - develop

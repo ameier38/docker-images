@@ -6,11 +6,14 @@ stages:
 services:
   - docker:dind
 
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
+
 build-dotnet-mono:
   stage: build
   image: docker:latest
   script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
     - docker pull "$CI_REGISTRY_IMAGE/dotnet-mono:latest" || true
     - docker build --cache-from "$CI_REGISTRY_IMAGE/dotnet-mono:latest" -t "$CI_REGISTRY_IMAGE/dotnet-mono:latest" dotnet-mono
     - docker push "$CI_REGISTRY_IMAGE/dotnet-mono:latest"
@@ -33,10 +36,8 @@ deploy-dotnet-mono:
   stage: deploy
   image: docker:latest
   script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
     - docker pull "$CI_REGISTRY_IMAGE/dotnet-mono:latest"
-    - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD" index.docker.io
-    - docker tag "$CI_REGISTRY_IMAGE/dotnet-mono:latest" index.docker.io/ameier38/dotnet-mono:latest
-    - docker push index.docker.io/ameier38/dotnet-mono:latest
+    - docker tag "$CI_REGISTRY_IMAGE/dotnet-mono:latest" ameier38/dotnet-mono:latest
+    - docker push ameier38/dotnet-mono:latest
   only:
     - master

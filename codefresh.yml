@@ -1,0 +1,35 @@
+version: '1.0'
+stages:
+  - build
+  - test
+  - push
+steps:
+  build_dotnet_mono:
+    stage: build
+    title: Build dotnet-mono
+    type: build
+    image_name: ameier38/dotnet-mono
+    working_directory: dotnet-mono
+    dockerfile: Dockerfile
+  test_dotnet_mono:
+    stage: test
+    title: Test dotnet-mono
+    image: ${{build_dotnet_mono}}
+    working_directory: ${{build_dotnet_mono}}
+    commands:
+      - dotnet --help
+      - mono --help
+      - fsharpi --help
+  push_dotnet_mono:
+    stage: push
+    title: Push dotnet-mono
+    type: push
+    candidate: ${{build_dotnet_mono}}
+    tags: 
+      - ${{CF_SHORT_REVISION}}
+      - latest
+    registry: dockerhub
+    when: 
+      branch:
+        only:
+          - master

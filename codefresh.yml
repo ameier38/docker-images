@@ -18,6 +18,7 @@ steps:
     working_directory: ${{build_dotnet_mono}}
     commands:
       - dotnet --help
+      - fake --help
       - mono --help
       - fsharpi --help
   push_dotnet_mono:
@@ -27,6 +28,7 @@ steps:
     candidate: ${{build_dotnet_mono}}
     tags: 
       - ${{CF_SHORT_REVISION}}
+      - "2.2"
       - latest
     registry: dockerhub
     when: 

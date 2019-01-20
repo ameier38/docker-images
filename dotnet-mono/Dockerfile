@@ -18,6 +18,10 @@ RUN apt update \
     && apt install --no-install-recommends -y mono-devel fsharp \
     && rm -rf /var/lib/apt/lists/*
 
+# install FAKE
+RUN dotnet tool install fake-cli -g
+ENV PATH="/root/.dotnet/tools:${PATH}"
+
 # set locale (https://stackoverflow.com/a/38553499/2108162)
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y locales \

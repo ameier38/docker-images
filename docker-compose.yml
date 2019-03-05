@@ -12,3 +12,7 @@ services:
       context: ./dotnet-mono-pre
       args:
         SDK_VERSION: 2.1.6
+  dind-kube-faas:
+    image: ameier38/dind-kube-faas:latest
+    build:
+      context: ./dind-kube-faas

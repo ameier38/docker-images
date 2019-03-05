@@ -24,6 +24,14 @@ steps:
     dockerfile: Dockerfile
     build_arguments:
       - SDK_VERSION=2.1.6
+  build_dind_kube_faas:
+    stage: build
+    title: Build dind-kube-faas
+    type: build
+    image_name: ameier38/dind-kube-faas
+    tag: "latest"
+    working_directory: dind-kube-faas
+    dockerfile: Dockerfile
   push_dotnet_mono_2_2:
     stage: push
     title: Push dotnet-mono 2.2
@@ -43,6 +51,18 @@ steps:
     candidate: ${{build_dotnet_mono_2_1_6}}
     tags: 
       - "2.1.6"
+    registry: dockerhub
+    when: 
+      branch:
+        only:
+          - master
+  push_dind_kube_faas:
+    stage: push
+    title: Push dind-kube-faas
+    type: push
+    candidate: ${{build_dind_kube_faas}}
+    tags: 
+      - "latest"
     registry: dockerhub
     when: 
       branch:

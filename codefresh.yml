@@ -4,32 +4,43 @@ stages:
   - test
   - push
 steps:
-  build_dotnet_mono:
+  build_dotnet_mono_2_2:
     stage: build
-    title: Build dotnet-mono
+    title: Build dotnet-mono 2.2
     type: build
     image_name: ameier38/dotnet-mono
     working_directory: dotnet-mono
     dockerfile: Dockerfile
-  test_dotnet_mono:
-    stage: test
-    title: Test dotnet-mono
-    image: ${{build_dotnet_mono}}
-    working_directory: ${{build_dotnet_mono}}
-    commands:
-      - dotnet --help
-      - fake --help
-      - mono --help
-      - fsharpi --help
-  push_dotnet_mono:
+    build_arguments:
+      - SDK_VERSION=2.2
+  build_dotnet_mono_2_1_6:
+    stage: build
+    title: Build dotnet-mono 2.1.6
+    type: build
+    image_name: ameier38/dotnet-mono
+    working_directory: dotnet-mono-pre
+    dockerfile: Dockerfile
+    build_arguments:
+      - SDK_VERSION=2.1.6
+  push_dotnet_mono_2_2:
     stage: push
-    title: Push dotnet-mono
+    title: Push dotnet-mono 2.2
     type: push
-    candidate: ${{build_dotnet_mono}}
+    candidate: ${{build_dotnet_mono_2_2}}
     tags: 
-      - ${{CF_SHORT_REVISION}}
       - "2.2"
-      - latest
+    registry: dockerhub
+    when: 
+      branch:
+        only:
+          - master
+  push_dotnet_mono_2_1_6:
+    stage: push
+    title: Push dotnet-mono 2.1.6
+    type: push
+    candidate: ${{build_dotnet_mono_2_1_6}}
+    tags: 
+      - "2.1.6"
     registry: dockerhub
     when: 
       branch:

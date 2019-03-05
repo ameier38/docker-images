@@ -9,6 +9,7 @@ steps:
     title: Build dotnet-mono 2.2
     type: build
     image_name: ameier38/dotnet-mono
+    tag: "2.2"
     working_directory: dotnet-mono
     dockerfile: Dockerfile
     build_arguments:
@@ -18,6 +19,7 @@ steps:
     title: Build dotnet-mono 2.1.6
     type: build
     image_name: ameier38/dotnet-mono
+    tag: "2.1.6"
     working_directory: dotnet-mono-pre
     dockerfile: Dockerfile
     build_arguments:

@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2
+ARG SDK_VERSION
+FROM mcr.microsoft.com/dotnet/core/sdk:${SDK_VERSION}
 
 # allow https (used to get mono repo)
 RUN apt update \
@@ -32,3 +33,9 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     update-locale LANG=en_US.UTF-8
 
 ENV LANG en_US.UTF-8 
+
+# test image
+RUN dotnet --help
+RUN fake --help
+RUN mono --help
+RUN fsharpi --help

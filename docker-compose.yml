@@ -1,6 +1,14 @@
-version: "3.6"
+version: "3.7"
 services:
   dotnet-mono:
-    image: ameier38/dotnet-mono:latest
+    image: ameier38/dotnet-mono:2.2
     build:
       context: ./dotnet-mono
+      args:
+        SDK_VERSION: 2.2
+  dotnet-mono-pre:
+    image: ameier38/dotnet-mono:2.1.6
+    build:
+      context: ./dotnet-mono-pre
+      args:
+        SDK_VERSION: 2.1.6

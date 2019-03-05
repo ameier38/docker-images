@@ -1,6 +1,8 @@
 ARG SDK_VERSION
 FROM mcr.microsoft.com/dotnet/core/sdk:${SDK_VERSION}
 
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 # allow https (used to get mono repo)
 RUN apt update \
     && apt install --no-install-recommends -y apt-transport-https \

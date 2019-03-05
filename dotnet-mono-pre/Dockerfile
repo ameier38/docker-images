@@ -1,5 +1,7 @@
 FROM buildpack-deps:stretch-scm
 
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 # Install .NET CLI dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -16,7 +18,7 @@ RUN apt-get update \
 ARG SDK_VERSION
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/release/${SDK_VERSION}xx/dotnet-sdk-latest-linux-x64.tar.gz \
-    && dotnet_sha512='0b15b9b0d8b5e0671d07b1e73e72226808fc8501bc0f4058f497511cf4b3a684123307c93021f83f399f0734b5faa78cf6231239480d0b116789e0333b0e3ecb' \
+    && dotnet_sha512='4830C236CB87E7CB2183DD3492016C5320B5C9F24EE30AE26C08DCDA448DF2473D7F89FD6D6C6D06FF89B8AEC30F745F6AB196C3B535F3FEBD27447A6544E1C5' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \

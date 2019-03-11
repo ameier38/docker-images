@@ -1,18 +1,10 @@
 version: "3.7"
 services:
-  dotnet-mono:
-    image: ameier38/dotnet-mono:2.2
+  dotnet-mono-sdk:
+    image: ameier38/dotnet-mono-sdk:2.1.6
     build:
-      context: ./dotnet-mono
-      args:
-        SDK_VERSION: 2.2
-  dotnet-mono-pre:
-    image: ameier38/dotnet-mono:2.1.6
+      context: ./dotnet-mono-sdk
+  dind-git-kube-faas:
+    image: ameier38/dind-git-kube-faas:latest
     build:
-      context: ./dotnet-mono-pre
-      args:
-        SDK_VERSION: 2.1.6
-  dind-kube-faas:
-    image: ameier38/dind-kube-faas:latest
-    build:
-      context: ./dind-kube-faas
+      context: ./dind-git-kube-faas

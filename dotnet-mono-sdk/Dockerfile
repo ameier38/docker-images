@@ -1,7 +1,5 @@
 FROM buildpack-deps:stretch-scm
 
-ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
-
 # Install .NET CLI dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -15,10 +13,8 @@ RUN apt-get update \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
-ARG SDK_VERSION
-
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/release/${SDK_VERSION}xx/dotnet-sdk-latest-linux-x64.tar.gz \
-    && dotnet_sha512='4830C236CB87E7CB2183DD3492016C5320B5C9F24EE30AE26C08DCDA448DF2473D7F89FD6D6C6D06FF89B8AEC30F745F6AB196C3B535F3FEBD27447A6544E1C5' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/release/2.1.6xx/dotnet-sdk-latest-linux-x64.tar.gz \
+    && dotnet_sha512='283AEA503B1F31F2437363E10301D45C903E89CA8CE93449B5A1F07F52669C13B03C7C8D0C5CCA493F2B606B7DB91181B53CEE2E9234427D904649058649B448' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
@@ -37,6 +33,8 @@ ENV ASPNETCORE_URLS=http://+:80 \
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help
 
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 # allow https (used to get mono repo)
 RUN apt update \
     && apt install --no-install-recommends -y apt-transport-https \
@@ -52,7 +50,7 @@ RUN apt-key adv \
     
 # install mono (used for paket)
 RUN apt update \
-    && apt install --no-install-recommends -y mono-devel fsharp \
+    && apt install --no-install-recommends -y mono-devel \
     && rm -rf /var/lib/apt/lists/*
 
 # install FAKE
@@ -74,4 +72,3 @@ ENV LANG en_US.UTF-8
 RUN dotnet --help
 RUN fake --help
 RUN mono --help
-RUN fsharpi --help

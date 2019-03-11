@@ -4,26 +4,14 @@ stages:
   - test
   - push
 steps:
-  build_dotnet_mono_2_2:
+  build_dotnet_mono_sdk:
     stage: build
-    title: Build dotnet-mono 2.2
+    title: Build dotnet-mono-sdk
     type: build
-    image_name: ameier38/dotnet-mono
-    tag: "2.2"
-    working_directory: dotnet-mono
-    dockerfile: Dockerfile
-    build_arguments:
-      - SDK_VERSION=2.2
-  build_dotnet_mono_2_1_6:
-    stage: build
-    title: Build dotnet-mono 2.1.6
-    type: build
-    image_name: ameier38/dotnet-mono
+    image_name: ameier38/dotnet-mono-sdk
     tag: "2.1.6"
-    working_directory: dotnet-mono-pre
+    working_directory: dotnet-mono-sdk
     dockerfile: Dockerfile
-    build_arguments:
-      - SDK_VERSION=2.1.6
   build_dind_git_kube_faas:
     stage: build
     title: Build dind-git-kube-faas
@@ -32,25 +20,12 @@ steps:
     tag: "latest"
     working_directory: dind-git-kube-faas
     dockerfile: Dockerfile
-  push_dotnet_mono_2_2:
+  push_dotnet_mono_sdk:
     stage: push
-    title: Push dotnet-mono 2.2
+    title: Push dotnet-mono-sdk
     type: push
-    candidate: ${{build_dotnet_mono_2_2}}
-    tags: 
-      - "2.2"
-    registry: dockerhub
-    when: 
-      branch:
-        only:
-          - master
-  push_dotnet_mono_2_1_6:
-    stage: push
-    title: Push dotnet-mono 2.1.6
-    type: push
-    candidate: ${{build_dotnet_mono_2_1_6}}
-    tags: 
-      - "2.1.6"
+    candidate: ${{build_dotnet_mono_sdk}}
+    tag: "2.1"
     registry: dockerhub
     when: 
       branch:

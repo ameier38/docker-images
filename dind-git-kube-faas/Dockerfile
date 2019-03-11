@@ -12,6 +12,6 @@ RUN apk add --update ca-certificates \
     && apk del --purge deps \
     && rm /var/cache/apk/*
 
+RUN kubectl --help
 RUN docker --help
 RUN faas --help
-RUN kubectl --help
